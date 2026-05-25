@@ -1,0 +1,5 @@
+HD|1|25|5|2026|Chieu|49000
+CT|1|25|5|2026|Chieu|CF01|Ca phe den|2|50000
+HD|2|25|5|2026|Chieu|176400
+CT|2|25|5|2026|Chieu|CF02|Ca phe sua|2|60000
+CT|2|25|5|2026|Chieu|TS01|Tra sua tran chau|3|120000
