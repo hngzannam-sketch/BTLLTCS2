@@ -705,14 +705,47 @@ int main() {
                 cout << "Lua chon khong hop le!\n";
                 break;
             }
-            goiMon(menu, hd.dsMon);
-            if (hd.dsMon.empty()) {
-                cout << "Chua goi mon nao, huy hoa don!\n";
-                if (hd.soBan != 0) {
-                    giaiPhongBan(dsBan, hd.soBan);
-                }
+            char xacNhan;
+
+            do {
+                hd.dsMon.clear();
+
+                goiMon(menu, hd.dsMon);
+
+                if (hd.dsMon.empty()) {
+                    cout << "Chua goi mon nao, huy hoa don!\n";
+
+                    if (hd.soBan != 0) {
+                        giaiPhongBan(dsBan, hd.soBan);
+                    }
+
                 break;
-            }
+                }
+
+                cout << "\nDanh sach mon da goi:\n";
+                for (int i = 0; i < hd.dsMon.size(); i++) {
+                    cout << i + 1 << ". "
+                    << hd.dsMon[i].mon.tenMon
+                    << " - SL: " << hd.dsMon[i].soLuong
+                    << " - Don gia: " << fixed << setprecision(0) << hd.dsMon[i].mon.gia
+                    << endl;
+                }
+
+                cout << "\nBan co chac chan chon cac mon nay khong? (y/n): ";
+                cin >> xacNhan;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+                if (xacNhan == 'n' || xacNhan == 'N') {
+                cout << "Moi ban chon lai mon.\n";
+                }
+
+                } while (xacNhan == 'n' || xacNhan == 'N');
+
+                if (hd.dsMon.empty()) {
+                break;
+                }
+            
+
             char chonVIP;
             bool vip = false;
             cout << "\nKhach co the VIP khong? (y/n): ";
