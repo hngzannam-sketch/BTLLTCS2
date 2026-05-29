@@ -13,7 +13,7 @@ struct DoUong {
     string loai;
     string size;
     double gia;
-    bool conHang;
+    string trangThai;
 };
 struct Ban {
     int soBan;
@@ -137,26 +137,23 @@ bool docMenuTuFile(vector<DoUong> &menu) {
                 stringstream ss(dong);
                 DoUong x;
                 string giaText;
-                string conHangText;
                 getline(ss, x.maMon, '|');
                 getline(ss, x.tenMon, '|');
                 getline(ss, x.loai, '|');
                 getline(ss, x.size, '|');
                 getline(ss, giaText, '|');
-                getline(ss, conHangText, '|');
+                getline(ss, x.trangThai, '|');
                 if (x.maMon.empty() || x.tenMon.empty() || x.loai.empty()
-                    || x.size.empty() || giaText.empty() || conHangText.empty()) {
+                    || x.size.empty() || giaText.empty() || x.trangThai.empty()) {
                     throw invalid_argument("Thieu du lieu");
                 }
                 x.gia = stod(giaText);
-                int trangThai = stoi(conHangText);
-                if (trangThai != 0 && trangThai != 1) {
-                    throw invalid_argument("conHang chi duoc la 0 hoac 1");
-                }
                 if (x.gia <= 0) {
                     throw invalid_argument("Gia phai lon hon 0");
                 }
-                x.conHang = trangThai;
+                if (x.trangThai != "Con hang" && x.trangThai != "Het hang") {
+                    throw invalid_argument("Trang thai phai la Con hang hoac Het hang");
+                }
                 menu.push_back(x);
             }
             catch (const exception &e) {
@@ -187,7 +184,7 @@ void ghiMenuVaoFile(const vector<DoUong> &menu) {
              << x.loai << "|"
              << x.size << "|"
              << fixed << setprecision(0) << x.gia << "|"
-             << x.conHang << endl;
+             << x.trangThai << endl;
     }
     file.close();
 }
@@ -275,8 +272,7 @@ void hienThiMenu(const vector<DoUong> &menu) {
              << setw(25) << x.tenMon
              << setw(15) << x.loai
              << setw(10) << x.size
-             << setw(10) << fixed << setprecision(0) << x.gia
-             << (x.conHang ? "Con hang" : "Het hang") << endl;
+             << setw(10) << fixed << setprecision(0) <<x.gia <<x.trangThai << endl;
     }
 }
 //  HIEN THI BAN 
@@ -317,7 +313,7 @@ void themDoUong(vector<DoUong> &menu) {
     cout << "Nhap size: ";
     getline(cin, x.size);
     x.gia = nhapSoNguyen("Nhap gia: ");
-    x.conHang = true;
+    x.trangThai = "Con hang";
     try {
     if (x.maMon.empty() || x.tenMon.empty() || x.loai.empty() || x.size.empty()) {
         throw invalid_argument("Thong tin do uong khong duoc bo trong");
@@ -379,10 +375,10 @@ void capNhatTrangThaiDoUong(vector<DoUong> &menu) {
     cout << "2. Het hang\n";
     int chon = nhapSoNguyen("Nhap trang thai: ");
     if (chon == 1) {
-        menu[vt].conHang = true;
+        menu[vt].trangThai = "Con hang";
     }
     else if (chon == 2) {
-        menu[vt].conHang = false;
+        menu[vt].trangThai = "Het hang";
     }
     else {
         cout << "Lua chon khong hop le!\n";
@@ -440,7 +436,7 @@ void goiMon(const vector<DoUong> &menu, vector<MonDaGoi> &dsMon) {
         if (vt == -1) {
             cout << "Khong tim thay mon!\n";
         }
-        else if (!menu[vt].conHang) {
+        else if (menu[vt].trangThai == "Het hang") {
             cout << "Mon nay da het hang!\n";
         }
         else {
