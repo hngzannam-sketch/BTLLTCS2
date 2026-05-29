@@ -56,22 +56,6 @@ struct BanGhiChiTiet {
     double doanhThuMon;
 };
 const string FILE_DOANH_THU = "DataCafe.txt";
-int nhapSoNguyen(const string &thongBao) {
-    int so;
-    while (true) {
-        cout << thongBao;
-        cin >> so;
-        if (cin.fail()) {
-            cout << "Loi! Vui long nhap so nguyen!\n";
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        }
-        else {
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            return so;
-        }
-    }
-}
 // HAM LAY THOI GIAN 
 int layNgayHienTai() {
     time_t now = time(0);
@@ -312,7 +296,9 @@ void themDoUong(vector<DoUong> &menu) {
     getline(cin, x.loai);
     cout << "Nhap size: ";
     getline(cin, x.size);
-    x.gia = nhapSoNguyen("Nhap gia: ");
+    cout<<"Nhap gia: ";
+    cin>>x.gia;
+    cin.ignore(1000, '\n');
     x.trangThai = "Con hang";
     try {
     if (x.maMon.empty() || x.tenMon.empty() || x.loai.empty() || x.size.empty()) {
@@ -345,7 +331,8 @@ void suaDoUong(vector<DoUong> &menu) {
     getline(cin, menu[vt].loai);
     cout << "Nhap size moi: ";
     getline(cin, menu[vt].size);
-    menu[vt].gia = nhapSoNguyen("Nhap gia moi: ");
+    cout<<"Nhap gia moi: ";
+    cin>>menu[vt].gia;
     ghiMenuVaoFile(menu);
     cout << "Da sua do uong va luu vao file!\n";
 }
@@ -373,7 +360,9 @@ void capNhatTrangThaiDoUong(vector<DoUong> &menu) {
     }
     cout << "1. Con hang\n";
     cout << "2. Het hang\n";
-    int chon = nhapSoNguyen("Nhap trang thai: ");
+    int chon;
+    cout<<"Nhap trang thai: ";
+    cin>>chon;
     if (chon == 1) {
         menu[vt].trangThai = "Con hang";
     }
@@ -398,7 +387,8 @@ void quanLyMenuDoUong(vector<DoUong> &menu) {
         cout << "4. Xoa do uong\n";
         cout << "5. Cap nhat con hang / het hang\n";
         cout << "0. Quay lai\n";
-        luaChon = nhapSoNguyen("Nhap lua chon: ");
+        cout<<"Nhap lua chon: ";
+        cin>>luaChon;
         switch (luaChon) {
         case 1:
             hienThiMenu(menu);
@@ -440,7 +430,8 @@ void goiMon(const vector<DoUong> &menu, vector<MonDaGoi> &dsMon) {
             cout << "Mon nay da het hang!\n";
         }
         else {
-            soLuong = nhapSoNguyen("Nhap so luong: ");
+            cout<<"Nhap so luong: ";
+            cin>>soLuong;
             if (soLuong <= 0) {
                 cout << "So luong phai lon hon 0!\n";
             }
@@ -680,31 +671,49 @@ double tinhDoanhThuTheoNam(int nam) {
     return tong;
 }
 void baoCaoTheoNgay() {
-    int ngay = nhapSoNguyen("Nhap ngay: ");
-    int thang = nhapSoNguyen("Nhap thang: ");
-    int nam = nhapSoNguyen("Nhap nam: ");
+    int ngay;
+    cout<<"Nhap ngay: ";
+    cin>>ngay;
+    int thang;
+    cout<<"Nhap thang: ";
+    cin>>thang;
+    int nam;
+    cout<<"Nhap nam: ";
+    cin>>nam;
     double tong = tinhDoanhThuTheoNgay(ngay, thang, nam);
     cout << "\nDoanh thu ngay " << ngay << "/" << thang << "/" << nam
          << ": " << fixed << setprecision(0) << tong << endl;
 }
 void baoCaoTheoThang() {
-    int thang = nhapSoNguyen("Nhap thang: ");
-    int nam = nhapSoNguyen("Nhap nam: ");
+    int thang;
+    cout<<"Nhap thang: ";
+    cin>>thang;
+    int nam;
+    cout<<"Nhap nam: ";
+    cin>>nam;
     double tong = tinhDoanhThuTheoThang(thang, nam);
     cout << "\nDoanh thu thang " << thang << "/" << nam
          << ": " << fixed << setprecision(0) << tong << endl;
 }
 void baoCaoTheoNam() {
-    int nam = nhapSoNguyen("Nhap nam: ");
+    int nam;
+    cout<<"Nhap nam: ";
+    cin>>nam;
     double tong = tinhDoanhThuTheoNam(nam);
     cout << "\nDoanh thu nam " << nam
          << ": " << fixed << setprecision(0) << tong << endl;
 }
 void thongKeDoanhThuTheoCa() {
     vector<BanGhiHoaDon> ds = docHoaDonTuFile();
-    int ngay = nhapSoNguyen("Nhap ngay: ");
-    int thang = nhapSoNguyen("Nhap thang: ");
-    int nam = nhapSoNguyen("Nhap nam: ");
+    int ngay;
+    cout<<"Nhap ngay: ";
+    cin>>ngay;
+    int thang;
+    cout<<"Nhap thang: ";
+    cin>>thang;
+    int nam;
+    cout<<"Nhap nam: ";
+    cin>>nam;
     double sang = 0;
     double chieu = 0;
     double toi = 0;
@@ -868,7 +877,8 @@ void baoCaoDoanhThu() {
         cout << "7. Xep hang mon ban chay tuan nay\n";
         cout << "8. Xep hang mon ban chay thang nay\n";
         cout << "0. Quay lai\n";
-        luaChon = nhapSoNguyen("Nhap lua chon: ");
+        cout<<"Nhap lua chon: ";
+        cin>>luaChon;
         switch (luaChon) {
         case 1:
             baoCaoTheoNgay();
@@ -912,14 +922,16 @@ int timBan(const vector<Ban> &dsBan, int soBan) {
 }
 void themBan(vector<Ban> &dsBan) {
     Ban b;
-    b.soBan = nhapSoNguyen("Nhap so ban: ");
+    cout<<"Nhap so ban: ";
+    cin>>b.soBan;
     if (timBan(dsBan, b.soBan) != -1) {
         cout << "So ban da ton tai!\n";
         return;
     }
     cout << "Nhap vi tri: ";
     getline(cin, b.viTri);
-    b.soGhe = nhapSoNguyen("Nhap so ghe: ");
+    cout<<"Nhap so ghe: ";
+    cin>>b.soGhe;
     b.trangThai = "Trong";
     try {
     if (b.soBan <= 0) {
@@ -941,7 +953,9 @@ void themBan(vector<Ban> &dsBan) {
     cout << "Da them ban va luu vao file!\n";
 }
 void suaBan(vector<Ban> &dsBan) {
-    int soBan = nhapSoNguyen("Nhap so ban can sua: ");
+    int soBan;
+    cout<<"Nhap so ban can sua: ";
+    cin>>soBan;
     int vt = timBan(dsBan, soBan);
     if (vt == -1) {
         cout << "Khong tim thay ban!\n";
@@ -949,12 +963,15 @@ void suaBan(vector<Ban> &dsBan) {
     }
     cout << "Nhap vi tri moi: ";
     getline(cin, dsBan[vt].viTri);
-    dsBan[vt].soGhe = nhapSoNguyen("Nhap so ghe moi: ");
+    cout<<"Nhap so ghe moi: ";
+    cin>>dsBan[vt].soGhe;
     ghiBanVaoFile(dsBan);
     cout << "Da sua thong tin ban va luu vao file!\n";
 }
 void xoaBan(vector<Ban> &dsBan) {
-    int soBan = nhapSoNguyen("Nhap so ban can xoa: ");
+    int soBan;
+    cout<<"Nhap so ban can xoa: ";
+    cin>>soBan;
     int vt = timBan(dsBan, soBan);
     if (vt == -1) {
         cout << "Khong tim thay ban!\n";
@@ -969,7 +986,9 @@ void xoaBan(vector<Ban> &dsBan) {
     cout << "Da xoa ban va luu vao file!\n";
 }
 void timKiemBan(const vector<Ban> &dsBan) {
-    int soBan = nhapSoNguyen("Nhap so ban can tim: ");
+    int soBan;
+    cout<<"Nhap so ban can tim: ";
+    cin>>soBan;
     int vt = timBan(dsBan, soBan);
     if (vt == -1) {
         cout << "Khong tim thay ban!\n";
@@ -992,7 +1011,8 @@ void quanLyBan(vector<Ban> &dsBan) {
         cout << "4. Xoa ban\n";
         cout << "5. Tim kiem ban\n";
         cout << "0. Quay lai\n";
-        luaChon = nhapSoNguyen("Nhap lua chon: ");
+        cout<<"Nhap lua chon: ";
+        cin>>luaChon;
         switch (luaChon) {
         case 1:
             hienThiBan(dsBan);
@@ -1095,7 +1115,8 @@ void taoHoaDonMoi(vector<DoUong> &menu, vector<Ban> &dsBan, int &maHoaDonTuDong)
     int hinhThuc;
     cout << "\n1. Mang di\n";
     cout << "2. Phuc vu tai quan\n";
-    hinhThuc = nhapSoNguyen("Nhap hinh thuc: ");
+    cout<<"Nhap hinh thuc: ";
+    cin>>hinhThuc;
     if (hinhThuc == 1) {
         hd.soBan = 0;
         cout << "Ban da chon mang di.\n";
@@ -1171,7 +1192,8 @@ void chayChuongTrinh() {
     int maHoaDonTuDong = 1;
     do {
         hienThiMenuChinh();
-        luaChon = nhapSoNguyen("Nhap lua chon: ");
+        cout<<"Nhap lua chon: ";
+        cin>>luaChon;
         switch (luaChon) {
         case 1:
             taoHoaDonMoi(menu, dsBan, maHoaDonTuDong);
