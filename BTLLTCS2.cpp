@@ -285,7 +285,8 @@ int timMon(const vector<DoUong> &menu, const string &ma) {
 void themDoUong(vector<DoUong> &menu) {
     DoUong x;
     cout << "Nhap ma mon: ";
-    getline(cin, x.maMon);
+    cin>>x.maMon;
+    cin.ignore(1000,'\n');
     if (timMon(menu, x.maMon) != -1) {
         cout << "Ma mon da ton tai!\n";
         return;
@@ -296,17 +297,17 @@ void themDoUong(vector<DoUong> &menu) {
     getline(cin, x.loai);
     cout << "Nhap size: ";
     getline(cin, x.size);
-    cout<<"Nhap gia: ";
-    cin>>x.gia;
+    cout << "Nhap gia: ";
+    cin >> x.gia;
     cin.ignore(1000, '\n');
     x.trangThai = "Con hang";
     try {
-    if (x.maMon.empty() || x.tenMon.empty() || x.loai.empty() || x.size.empty()) {
-        throw invalid_argument("Thong tin do uong khong duoc bo trong");
-    }
-    if (x.gia <= 0) {
-        throw invalid_argument("Gia do uong phai lon hon 0");
-    }
+        if (x.maMon.empty() || x.tenMon.empty() || x.loai.empty() || x.size.empty()) {
+            throw invalid_argument("Thong tin do uong khong duoc bo trong");
+        }
+        if (x.gia <= 0) {
+            throw invalid_argument("Gia do uong phai lon hon 0");
+        }
     }
     catch (const exception &e) {
         cout << "Loi them do uong: " << e.what() << endl;
@@ -319,7 +320,8 @@ void themDoUong(vector<DoUong> &menu) {
 void suaDoUong(vector<DoUong> &menu) {
     string ma;
     cout << "Nhap ma mon can sua: ";
-    getline(cin, ma);
+    cin>>ma;
+    cin.ignore(1000,'\n');
     int vt = timMon(menu, ma);
     if (vt == -1) {
         cout << "Khong tim thay mon!\n";
@@ -333,13 +335,15 @@ void suaDoUong(vector<DoUong> &menu) {
     getline(cin, menu[vt].size);
     cout<<"Nhap gia moi: ";
     cin>>menu[vt].gia;
+    cin.ignore(1000,'\n');
     ghiMenuVaoFile(menu);
     cout << "Da sua do uong va luu vao file!\n";
 }
 void xoaDoUong(vector<DoUong> &menu) {
     string ma;
     cout << "Nhap ma mon can xoa: ";
-    getline(cin, ma);
+    cin>>ma;
+    cin.ignore(1000,'\n');
     int vt = timMon(menu, ma);
     if (vt == -1) {
         cout << "Khong tim thay mon!\n";
@@ -352,7 +356,8 @@ void xoaDoUong(vector<DoUong> &menu) {
 void capNhatTrangThaiDoUong(vector<DoUong> &menu) {
     string ma;
     cout << "Nhap ma mon can cap nhat: ";
-    getline(cin, ma);
+    cin>>ma;
+    cin.ignore(1000,'\n');
     int vt = timMon(menu, ma);
     if (vt == -1) {
         cout << "Khong tim thay mon!\n";
@@ -432,6 +437,7 @@ void goiMon(const vector<DoUong> &menu, vector<MonDaGoi> &dsMon) {
         else {
             cout<<"Nhap so luong: ";
             cin>>soLuong;
+            cin.ignore(1000, '\n');
             if (soLuong <= 0) {
                 cout << "So luong phai lon hon 0!\n";
             }
@@ -452,7 +458,7 @@ void goiMon(const vector<DoUong> &menu, vector<MonDaGoi> &dsMon) {
         }
         cout << "Ban co muon goi tiep khong? (y/n): ";
         cin >> tiepTuc;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.ignore(1000, '\n');
     } while (tiepTuc == 'y' || tiepTuc == 'Y');
 }
 //  TINH TIEN 
@@ -924,6 +930,7 @@ void themBan(vector<Ban> &dsBan) {
     Ban b;
     cout<<"Nhap so ban: ";
     cin>>b.soBan;
+    cin.ignore(1000, '\n');
     if (timBan(dsBan, b.soBan) != -1) {
         cout << "So ban da ton tai!\n";
         return;
@@ -956,6 +963,7 @@ void suaBan(vector<Ban> &dsBan) {
     int soBan;
     cout<<"Nhap so ban can sua: ";
     cin>>soBan;
+    cin.ignore(1000, '\n');
     int vt = timBan(dsBan, soBan);
     if (vt == -1) {
         cout << "Khong tim thay ban!\n";
@@ -972,6 +980,7 @@ void xoaBan(vector<Ban> &dsBan) {
     int soBan;
     cout<<"Nhap so ban can xoa: ";
     cin>>soBan;
+    cin.ignore(1000,'\n');
     int vt = timBan(dsBan, soBan);
     if (vt == -1) {
         cout << "Khong tim thay ban!\n";
@@ -989,6 +998,7 @@ void timKiemBan(const vector<Ban> &dsBan) {
     int soBan;
     cout<<"Nhap so ban can tim: ";
     cin>>soBan;
+    cin.ignore(1000,'\n');
     int vt = timBan(dsBan, soBan);
     if (vt == -1) {
         cout << "Khong tim thay ban!\n";
@@ -1069,7 +1079,7 @@ int chonBan(vector<Ban> &dsBan) {
     hienThiBan(dsBan);
     cout << "\nNhap so ban muon chon: ";
     cin >> soBan;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.ignore(1000, '\n');
     for (Ban &b : dsBan) {
         if (b.soBan == soBan) {
             if (b.trangThai == "Trong") {
@@ -1156,7 +1166,7 @@ void taoHoaDonMoi(vector<DoUong> &menu, vector<Ban> &dsBan, int &maHoaDonTuDong)
         }
         cout << "\nBan co chac chan chon cac mon nay khong? (y/n): ";
         cin >> xacNhan;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.ignore(1000, '\n');
         if (xacNhan == 'n' || xacNhan == 'N') {
             cout << "Moi ban chon lai mon.\n";
         }
@@ -1165,7 +1175,7 @@ void taoHoaDonMoi(vector<DoUong> &menu, vector<Ban> &dsBan, int &maHoaDonTuDong)
     bool vip = false;
     cout << "\nKhach co the VIP khong? (y/n): ";
     cin >> chonVIP;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.ignore(1000, '\n');
     if (chonVIP == 'y' || chonVIP == 'Y') {
         vip = true;
     }
