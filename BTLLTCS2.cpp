@@ -19,7 +19,7 @@ struct Ban {
     int soBan;
     string viTri;
     int soGhe;
-    string trangThai; // Trong / Co khach
+    string trangThai;
 };
 struct MonDaGoi {
     DoUong mon;
@@ -55,8 +55,6 @@ struct BanGhiChiTiet {
     int soLuong;
     double doanhThuMon;
 };
-const string FILE_DOANH_THU = "DataCafe.txt";
-// HAM LAY THOI GIAN 
 int layNgayHienTai() {
     time_t now = time(0);
     tm *ltm = localtime(&now);
@@ -102,7 +100,6 @@ int laySoTuanTrongNam(int ngay, int thang, int nam) {
     mktime(&timeInfo);
     return timeInfo.tm_yday / 7 + 1;
 }
-//  KHOI TAO DU LIEU 
 bool docMenuTuFile(vector<DoUong> &menu) {
     ifstream file("Menu.txt");
     try {
@@ -242,7 +239,6 @@ void ghiBanVaoFile(const vector<Ban> &dsBan) {
     }
     file.close();
 }
-//  HIEN THI MENU 
 void hienThiMenu(const vector<DoUong> &menu) {
     cout << "\n========== MENU DO UONG ==========\n";
     cout << left << setw(10) << "Ma"
@@ -259,7 +255,6 @@ void hienThiMenu(const vector<DoUong> &menu) {
              << setw(10) << fixed << setprecision(0) <<x.gia <<x.trangThai << endl;
     }
 }
-//  HIEN THI BAN 
 void hienThiBan(const vector<Ban> &dsBan) {
     cout << "\n========== DANH SACH BAN ==========\n";
     cout << left << setw(10) << "So ban"
@@ -272,8 +267,7 @@ void hienThiBan(const vector<Ban> &dsBan) {
              << setw(10) << b.soGhe
              << b.trangThai << endl;
     }
-}
-//  TIM MON THEO MA 
+} 
 int timMon(const vector<DoUong> &menu, const string &ma) {
     for (size_t i = 0; i < menu.size(); i++) {
         if (menu[i].maMon == ma) {
@@ -284,31 +278,23 @@ int timMon(const vector<DoUong> &menu, const string &ma) {
 }
 void themDoUong(vector<DoUong> &menu) {
     DoUong x;
-
     cout << "Nhap ma mon: ";
     cin>>x.maMon;
     cin.ignore(1000,'\n');
-
     if (timMon(menu, x.maMon) != -1) {
         cout << "Ma mon da ton tai!\n";
         return;
     }
-
     cout << "Nhap ten mon: ";
     getline(cin, x.tenMon);
-
     cout << "Nhap loai: ";
     getline(cin, x.loai);
-
     cout << "Nhap size: ";
     getline(cin, x.size);
-
     cout << "Nhap gia: ";
     cin >> x.gia;
     cin.ignore(1000, '\n');
-
     x.trangThai = "Con hang";
-
     try {
         if (x.maMon.empty() || x.tenMon.empty() || x.loai.empty() || x.size.empty()) {
             throw invalid_argument("Thong tin do uong khong duoc bo trong");
@@ -322,10 +308,8 @@ void themDoUong(vector<DoUong> &menu) {
         cout << "Loi them do uong: " << e.what() << endl;
         return;
     }
-
     menu.push_back(x);
     ghiMenuVaoFile(menu);
-
     cout << "Da them do uong va luu vao file!\n";
 }
 void suaDoUong(vector<DoUong> &menu) {
@@ -429,7 +413,6 @@ void quanLyMenuDoUong(vector<DoUong> &menu) {
         }
     } while (luaChon != 0);
 }
-//  GOI MON 
 void goiMon(const vector<DoUong> &menu, vector<MonDaGoi> &dsMon) {
     string ma;
     int soLuong;
@@ -472,7 +455,6 @@ void goiMon(const vector<DoUong> &menu, vector<MonDaGoi> &dsMon) {
         cin.ignore(1000, '\n');
     } while (tiepTuc == 'y' || tiepTuc == 'Y');
 }
-//  TINH TIEN 
 void tinhTien(HoaDon &hd, bool vip) {
     hd.tongTien = 0;
     for (const MonDaGoi &x : hd.dsMon) {
@@ -487,7 +469,6 @@ void tinhTien(HoaDon &hd, bool vip) {
     }
     hd.thanhTien = hd.tongTien + hd.vat - hd.giamGia;
 }
-//  IN HOA DON 
 void inHoaDon(const HoaDon &hd, bool vip) {
     cout << "\n================ HOA DON ================\n";
     cout << "Ma hoa don: " << hd.maHD << endl;
@@ -518,12 +499,8 @@ void inHoaDon(const HoaDon &hd, bool vip) {
     cout << "Thanh tien: " << fixed << setprecision(0) << hd.thanhTien << endl;
     cout << "=======\n";
 }
-//  LUU DOANH THU VAO FILE 
-// File co 2 loai dong:
-// HD|maHD|ngay|thang|nam|ca|thanhTienHoaDon
-// CT|maHD|ngay|thang|nam|ca|maMon|tenMon|soLuong|doanhThuMon
 void luuDoanhThu(const HoaDon &hd) {
-    ofstream file(FILE_DOANH_THU, ios::app);
+    ofstream file("DataCafe.txt", ios::app);
     if (!file.is_open()) {
         cout << "Khong mo duoc file doanhthu.txt!\n";
         return;
@@ -552,10 +529,9 @@ void luuDoanhThu(const HoaDon &hd) {
     }
     file.close();
 }
-//  DOC FILE DOANH THU 
 vector<BanGhiHoaDon> docHoaDonTuFile() {
     vector<BanGhiHoaDon> ds;
-    ifstream file(FILE_DOANH_THU);
+    ifstream file("DataCafe.txt");
     if (!file.is_open()) {
         return ds;
     }
@@ -602,7 +578,7 @@ vector<BanGhiHoaDon> docHoaDonTuFile() {
 }
 vector<BanGhiChiTiet> docChiTietTuFile() {
     vector<BanGhiChiTiet> ds;
-    ifstream file(FILE_DOANH_THU);
+    ifstream file("DataCafe.txt");
     if (!file.is_open()) {
         return ds;
     }
@@ -880,7 +856,6 @@ void xepHangMonBanChay(int kieuThongKe) {
              << dsXepHang[i].soLuong << endl;
     }
 }
-//  BAO CAO DOANH THU 
 void baoCaoDoanhThu() {
     int luaChon;
     do {
@@ -1138,7 +1113,6 @@ int layMaHoaDonTiepTheo() {
     file.close();
     return maLonNhat + 1;
 }
-//  CHON BAN 
 int chonBan(vector<Ban> &dsBan) {
     int soBan;
     hienThiBan(dsBan);
@@ -1296,7 +1270,6 @@ void chayChuongTrinh() {
         }
     } while (luaChon != 0);
 }
-//  MAIN 
 int main() {
    chayChuongTrinh();
     return 0;
