@@ -284,27 +284,36 @@ int timMon(const vector<DoUong> &menu, const string &ma) {
 }
 void themDoUong(vector<DoUong> &menu) {
     DoUong x;
+
     cout << "Nhap ma mon: ";
     cin>>x.maMon;
     cin.ignore(1000,'\n');
+
     if (timMon(menu, x.maMon) != -1) {
         cout << "Ma mon da ton tai!\n";
         return;
     }
+
     cout << "Nhap ten mon: ";
     getline(cin, x.tenMon);
+
     cout << "Nhap loai: ";
     getline(cin, x.loai);
+
     cout << "Nhap size: ";
     getline(cin, x.size);
+
     cout << "Nhap gia: ";
     cin >> x.gia;
     cin.ignore(1000, '\n');
+
     x.trangThai = "Con hang";
+
     try {
         if (x.maMon.empty() || x.tenMon.empty() || x.loai.empty() || x.size.empty()) {
             throw invalid_argument("Thong tin do uong khong duoc bo trong");
         }
+
         if (x.gia <= 0) {
             throw invalid_argument("Gia do uong phai lon hon 0");
         }
@@ -313,8 +322,10 @@ void themDoUong(vector<DoUong> &menu) {
         cout << "Loi them do uong: " << e.what() << endl;
         return;
     }
+
     menu.push_back(x);
     ghiMenuVaoFile(menu);
+
     cout << "Da them do uong va luu vao file!\n";
 }
 void suaDoUong(vector<DoUong> &menu) {
@@ -1010,6 +1021,56 @@ void timKiemBan(const vector<Ban> &dsBan) {
     cout << "So ghe: " << dsBan[vt].soGhe << endl;
     cout << "Trang thai: " << dsBan[vt].trangThai << endl;
 }
+void trangThai1Ban(vector<Ban> &dsBan) {
+    int soBan;
+    cout << "Nhap so ban can chuyen ve Trong: ";
+    cin >> soBan;
+    cin.ignore(1000, '\n');
+    int vt = timBan(dsBan, soBan);
+    if (vt == -1) {
+        cout << "Khong tim thay ban!\n";
+        return;
+    }
+    if (dsBan[vt].trangThai == "Trong") {
+        cout << "Ban nay dang trong san roi!\n";
+        return;
+    }
+    dsBan[vt].trangThai = "Trong";
+    ghiBanVaoFile(dsBan);
+    cout << "Da chuyen ban " << soBan << " ve trang thai Trong!\n";
+}
+void trangThaiAllBan(vector<Ban> &dsBan) {
+    for (Ban &b : dsBan) {
+        b.trangThai = "Trong";
+    }
+    ghiBanVaoFile(dsBan);
+    cout << "Da chuyen tat ca ban ve trang thai Trong!\n";
+}
+void capNhatTrangThaiBan(vector<Ban> &dsBan) {
+    int luaChon;
+    do {
+        cout << "\n========== CAP NHAT TRANG THAI BAN ==========\n";
+        cout << "1. Chuyen 1 ban ve trang thai Trong\n";
+        cout << "2. Chuyen tat ca ban ve trang thai Trong\n";
+        cout << "0. Quay lai\n";
+        cout << "Nhap lua chon: ";
+        cin >> luaChon;
+        cin.ignore(1000, '\n');
+        switch (luaChon) {
+        case 1:
+            trangThai1Ban(dsBan);
+            break;
+        case 2:
+            trangThaiAllBan(dsBan);
+            break;
+        case 0:
+            cout << "Quay lai quan ly ban.\n";
+            break;
+        default:
+            cout << "Lua chon khong hop le!\n";
+        }
+    } while (luaChon != 0);
+}
 void quanLyBan(vector<Ban> &dsBan) {
     int luaChon;
     do {
@@ -1017,9 +1078,10 @@ void quanLyBan(vector<Ban> &dsBan) {
         cout << "\n========== QUAN LY BAN ==========\n";
         cout << "1. Xem danh sach ban\n";
         cout << "2. Them ban\n";
-        cout << "3. Sua thong tin ban\n";
+        cout << "3. Cap nhat thong tin ban\n";
         cout << "4. Xoa ban\n";
         cout << "5. Tim kiem ban\n";
+        cout<<  "6. Sua thong tin ban\n";
         cout << "0. Quay lai\n";
         cout<<"Nhap lua chon: ";
         cin>>luaChon;
@@ -1031,13 +1093,16 @@ void quanLyBan(vector<Ban> &dsBan) {
             themBan(dsBan);
             break;
         case 3:
-            suaBan(dsBan);
+            capNhatTrangThaiBan(dsBan);
             break;
         case 4:
             xoaBan(dsBan);
             break;
         case 5:
             timKiemBan(dsBan);
+            break;
+        case 6:
+            suaBan(dsBan);
             break;
         case 0:
             cout << "Quay lai menu chinh.\n";
@@ -1182,10 +1247,6 @@ void taoHoaDonMoi(vector<DoUong> &menu, vector<Ban> &dsBan, int &maHoaDonTuDong)
     tinhTien(hd, vip);
     inHoaDon(hd, vip);
     luuDoanhThu(hd);
-    if (hd.soBan != 0) {
-        giaiPhongBan(dsBan, hd.soBan);
-        ghiBanVaoFile(dsBan);
-    }
 }
 void chayChuongTrinh() {
     vector<DoUong> menu;
