@@ -1,0 +1,21 @@
+CF01|Americano Nong|Coffee|M|45000|Con hang
+CF02|Americano Da|Coffee|M|45000|Con hang
+CF03|Latte Nong|Coffee|M|55000|Con hang
+CF04|Latte Da|Coffee|M|55000|Con hang
+CF05|Cappuccino Nong|Coffee|M|55000|Con hang
+CF06|Caramel Macchiato|Coffee|M|65000|Con hang
+CF07|Mocha Da|Coffee|M|60000|Con hang
+CF08|Cold Brew|Coffee|M|60000|Con hang
+CF09|Espresso|Coffee|S|40000|Con hang
+CF10|Vietnamese Coffee|Coffee|M|45000|Con hang
+TS01|Matcha Latte|Tea|M|60000|Con hang
+TS02|Green Tea Latte|Tea|M|60000|Con hang
+TS03|Black Tea Latte|Tea|M|55000|Con hang
+TS04|Chai Tea Latte|Tea|M|60000|Con hang
+TS05|Peach Tea|Tea|M|50000|Con hang
+DR02|Strawberry Cream|Non Coffee|M|65000|Con hang
+DR03|Mango Passion Tea|Refreshment|M|60000|Con hang
+DR04|Lemonade Tea|Refreshment|M|55000|Con hang
+DR05|Orange Juice|Juice|M|50000|Con hang
+CA01|Croissant Bo|Cake|S|45000|Con hang
+CA02|Cheese Cake|Cake|S|55000|Con hang

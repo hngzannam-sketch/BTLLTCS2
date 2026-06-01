@@ -1,0 +1,15 @@
+1|Trong nha|4|Trong
+2|Trong nha|4|Trong
+3|Trong nha|2|Trong
+4|Trong nha|4|Co khach
+5|Trong nha|3|Trong
+6|Trong nha|4|Trong
+7|Ngoai troi|2|Trong
+8|Ngoai troi|4|Trong
+9|Ngoai troi|2|Trong
+10|Ngoai troi|6|Trong
+11|Tang 2|6|Trong
+12|Tang 2|4|Trong
+13|Tang 2|2|Trong
+14|Tang 2|4|Trong
+15|Tang 2|3|Trong
