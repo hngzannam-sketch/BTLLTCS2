@@ -431,7 +431,7 @@ void goiMon(const vector<DoUong> &menu, vector<MonDaGoi> &dsMon) {
         else {
             cout<<"Nhap so luong: ";
             cin>>soLuong;
-            cin.ignore(1000, '\n');
+            cin.ignore(1000,'\n');
             if (soLuong <= 0) {
                 cout << "So luong phai lon hon 0!\n";
             }
